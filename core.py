@@ -169,14 +169,18 @@ class Chaoxing(QObject):
         _session = init_session()
         job_list = []
         job_info = {}
+        logger.info("开始读取章节所有任务点")
+        info_flag = True
         for _possible_num in [
             "0",
             "1",
             "2",
         ]:  # 学习界面任务卡片数，很少有3个的，但是对于章节解锁任务点少一个都不行，可以从API /mooc-ans/mycourse/studentstudyAjax获取值，或者干脆直接加，但二者都会造成额外的请求
             _url = f"https://mooc1.chaoxing.com/mooc-ans/knowledge/cards?clazzid={_clazzid}&courseid={_courseid}&knowledgeid={_knowledgeid}&num={_possible_num}&ut=s&cpi={_cpi}&v=20160407-3&mooc2=1"
-            logger.info("开始读取章节所有任务点")
             _resp = _session.get(_url)
+            if info_flag:
+                logger.info("开始解码任务点列表")
+                info_flag = False
             _job_list, _job_info = decode_course_card(_resp.text)
             if _job_info.get("notOpen", False):
                 # 直接返回，节省一次请求

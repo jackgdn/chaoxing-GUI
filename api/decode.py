@@ -92,7 +92,6 @@ def decode_course_point(_text):
 
 
 def decode_course_card(_text: str):
-    logger.info("开始解码任务点列表")
     _job_info = {}
     _job_list = []
     # 对于未开放章节检测

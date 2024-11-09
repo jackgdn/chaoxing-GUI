@@ -181,6 +181,10 @@ class CourseWorker(QThread):
             __point_index += 1
         self.signal_finish.emit(True)  # 任务完成
 
+        # 一门课程结束后，断开信号和槽的连接
+        self.chaoxing.signal_logger.disconnect(self.signal_logger.emit)
+        self.chaoxing.signal_progress.disconnect(self.singal_progress.emit)
+        self.chaoxing.signal_time_updated.disconnect(self.signal_time_updated.emit)
 
 class MainWindow(QMainWindow):
 
