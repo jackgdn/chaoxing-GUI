@@ -1,0 +1,6 @@
+requests
+pyaes
+beautifulsoup4
+lxml
+loguru
+pyside6
