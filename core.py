@@ -316,3 +316,31 @@ class Chaoxing(QObject):
             # )
             self.signal_time_updated.emit(f"{sec2time(current)}/{sec2time(total)}")
             time.sleep(1)
+
+    def study_document(self, _course, _job):
+        _session = init_session()
+        _url = f"https://mooc1.chaoxing.com/ananas/job/document?jobid={_job['jobid']}&knowledgeid={re.findall(r'nodeId_(.*?)-', _job['otherinfo'])[0]}&courseid={_course['courseId']}&clazzid={_course['clazzId']}&jtoken={_job['jtoken']}&_dc={get_timestamp()}"
+        _resp = _session.get(_url)
+
+    def study_read(self, _course, _job, _job_info) -> None:
+        """
+        阅读任务学习，仅完成任务点，并不增长时长
+        """
+        _session = init_session()
+        _resp = _session.get(
+            url="https://mooc1.chaoxing.com/ananas/job/readv2",
+            params={
+                "jobid": _job["jobid"],
+                "knowledgeid": _job_info["knowledgeid"],
+                "jtoken": _job["jtoken"],
+                "courseid": _course["courseId"],
+                "clazzid": _course["clazzId"],
+            },
+        )
+        if _resp.status_code != 200:
+            self.signal_logger.emit(f"阅读任务学习失败 -> [{_resp.status_code}]{_resp.text}")
+            logger.warning(f"阅读任务学习失败 -> [{_resp.status_code}]{_resp.text}")
+        else:
+            _resp_json = _resp.json()
+            self.signal_logger.emit(f"阅读任务学习 -> {_resp_json['msg']}")
+            logger.info(f"阅读任务学习 -> {_resp_json['msg']}")

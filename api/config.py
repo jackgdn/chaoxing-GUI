@@ -18,4 +18,3 @@ class GlobalConst:
         "Referer": "https://mooc1.chaoxing.com/ananas/modules/audio/index_new.html?v=2023-0428-1705",
         "Host": "mooc1.chaoxing.com",
     }
-    THRESHOLD = 3

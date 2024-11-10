@@ -151,14 +151,14 @@ class CourseWorker(QThread):
                             )
 
                 # 文档任务
-                # elif job["type"] == "document":
-                #     self.signal_logger.emit(
-                #         f"识别到文档任务，任务章节：{self.course['title']}"
-                #     )
-                #     logger.info(
-                #         f"识别到文档任务，任务章节：{self.course['title']} 任务ID：{job['jobid']}"
-                #     )
-                #     self.chaoxing.study_document(self.course, job)
+                elif job["type"] == "document":
+                    self.signal_logger.emit(
+                        f"识别到文档任务，任务章节：{self.course['title']}"
+                    )
+                    logger.info(
+                        f"识别到文档任务，任务章节：{self.course['title']} 任务ID：{job['jobid']}"
+                    )
+                    self.chaoxing.study_document(self.course, job)
 
                 # 测验任务
                 # elif job["type"] == "workid":
@@ -168,14 +168,14 @@ class CourseWorker(QThread):
                 #     self.chaoxing.study_work(self.course, job, job_info)
 
                 # 阅读任务
-                # elif job["type"] == "read":
-                #     self.signal_logger.emit(
-                #         f"识别到阅读任务，任务章节：{self.course['title']}"
-                #     )
-                #     logger.info(
-                #         f"识别到阅读任务，任务章节：{self.course['title']} 任务ID：{job['jobid']}"
-                #     )
-                #     self.chaoxing.strdy_read(self.course, job, job_info)
+                elif job["type"] == "read":
+                    self.signal_logger.emit(
+                        f"识别到阅读任务，任务章节：{self.course['title']}"
+                    )
+                    logger.info(
+                        f"识别到阅读任务，任务章节：{self.course['title']} 任务ID：{job['jobid']}"
+                    )
+                    self.chaoxing.study_read(self.course, job, job_info)
 
                 self.signal_progress_reset.emit(0)
             __point_index += 1
@@ -185,6 +185,7 @@ class CourseWorker(QThread):
         self.chaoxing.signal_logger.disconnect(self.signal_logger.emit)
         self.chaoxing.signal_progress.disconnect(self.singal_progress.emit)
         self.chaoxing.signal_time_updated.disconnect(self.signal_time_updated.emit)
+
 
 class MainWindow(QMainWindow):
 
@@ -257,11 +258,10 @@ class MainWindow(QMainWindow):
     def message_box_finish(self, status):
         if status:
             QMessageBox.information(self, "提示", "课程学习完成！")
-            self.outputArea.append("")
 
 
 if __name__ == "__main__":
-    logger.add("chaoxing.log", rotation="10 MB", encoding="utf-8")
+    logger.add("chaoxing.log", rotation="10 KB", encoding="utf-8")
     app = QApplication()
     font = app.font()
     font.setPointSize(13)
