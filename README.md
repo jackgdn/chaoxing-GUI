@@ -2,16 +2,12 @@
 
 本项目基于[超星学习通自动化完成任务点(命令行版)](https://github.com/Samueli924/chaoxing)项目创建，并使用 PySide6 模块为原本的命令行版增加了图形界面。
 
-目前该脚本仅支持自动化学习视频任务点，对其余类型任务点的支持会在未来添加。
-
 ## 使用方法
 
 * 下载项目到本地 `git clone https://github.com/jackgdn/chaoxing-GUI.git --depth=1`
 * 进入项目路径 `cd chaoxing-GUI`
 * 安装依赖 `python -m pip install -r requirements.txt`
 * 运行程序 `python main.py`
-
-该项目的可执行文件版本会在下一次更新时发布。
 
 ## 计划更新路线
 
@@ -35,8 +31,9 @@
 
 ### 2024.11.10 - 3#
 
-- 添加对文档任务点和阅读任务点的支持
-- 修改日志文件上限为 10KB
+- 添加对文档任务点和阅读任务点的支持。
+- 修改日志文件上限为 10KB。
+- 上传二进制文件。
 
 # 免责声明
 

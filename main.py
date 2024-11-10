@@ -23,6 +23,7 @@ class LoginWindow(QMainWindow):
         super().__init__()
         self.main_window = None
         self.init_ui()
+        logger.info("程序初始化完成")
 
     def init_ui(self):
         self.resize(600, 400)
