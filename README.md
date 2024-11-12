@@ -6,8 +6,9 @@
 
 * 下载项目到本地 `git clone https://github.com/jackgdn/chaoxing-GUI.git --depth=1`
 * 进入项目路径 `cd chaoxing-GUI`
-* 安装依赖 `python -m pip install -r requirements.txt`
-* 运行程序 `python main.py`
+* *~~安装依赖 `python -m pip install -r requirements.txt`~~*
+* *~~运行程序 `python main.py`~~*
+* 双击 `chaoxing-GUI.bat`
 
 ## 计划更新路线
 

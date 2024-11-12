@@ -27,7 +27,7 @@ class LoginWindow(QMainWindow):
 
     def init_ui(self):
         self.resize(600, 400)
-        self.setWindowTitle("chaoxing")
+        self.setWindowTitle("chaoxing-GUI")
         self.setFixedSize(600, 400)
 
         self.lineEdit_username = QLineEdit(self)
@@ -197,7 +197,7 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         self.resize(600, 400)
-        self.setWindowTitle("chaoxing")
+        self.setWindowTitle("chaoxing-GUI")
         self.setFixedSize(600, 400)
 
         self.outputArea = QTextEdit(self)  # 输出区
