@@ -5,16 +5,18 @@ from PySide6.QtWidgets import (
     QMainWindow,
     QPushButton,
     QLineEdit,
+    QCheckBox,
     QMessageBox,
     QTextEdit,
     QComboBox,
     QProgressBar,
-    QLabel,
+    QLabel
 )
 from PySide6.QtCore import QThread, Signal
 from core import Account, Chaoxing, RollBackManager
 import sys
 from loguru import logger
+import pickle
 
 
 class LoginWindow(QMainWindow):
@@ -23,26 +25,31 @@ class LoginWindow(QMainWindow):
         super().__init__()
         self.main_window = None
         self.init_ui()
+        self.load_credentials()
         logger.info("程序初始化完成")
 
     def init_ui(self):
         self.resize(600, 400)
-        self.setWindowTitle("chaoxing-GUI")
-        self.setFixedSize(600, 400)
+        self.setWindowTitle("chaoxing-GUI by jack_gdn")
+        self.setFixedSize(480, 320)
 
         self.lineEdit_username = QLineEdit(self)
         self.lineEdit_username.setPlaceholderText("请输入用户名")
-        self.lineEdit_username.move(150, 70)
+        self.lineEdit_username.move(90, 70)
         self.lineEdit_username.resize(300, 30)
 
         self.lineEdit_password = QLineEdit(self)
         self.lineEdit_password.setEchoMode(QLineEdit.Password)
         self.lineEdit_password.setPlaceholderText("请输入密码")
-        self.lineEdit_password.move(150, 170)
+        self.lineEdit_password.move(90, 120)
         self.lineEdit_password.resize(300, 30)
 
+        self.remember_password = QCheckBox("记住密码", self)
+        self.remember_password.move(90, 170)
+        self.remember_password.resize(100, 30)
+
         self.button_login = QPushButton("登录", self)
-        self.button_login.move(250, 265)
+        self.button_login.move(190, 220)
         self.button_login.resize(100, 30)
         self.button_login.clicked.connect(self.login)
 
@@ -59,10 +66,42 @@ class LoginWindow(QMainWindow):
             if not login_status["status"]:
                 QMessageBox.warning(self, "登录失败", login_status["message"])
             else:
+                if self.remember_password.isChecked():
+                    self.save_credentials(username, password)
+                else:
+                    self.remove_credentials()
+
                 if self.main_window is None:
                     self.main_window = MainWindow(chaoxing)  # 保持对主窗口的引用
                 self.main_window.show()
                 self.close()
+
+    def save_credentials(self, username, password):
+        credentials = (username, password)
+        with open("credentials", "wb") as f:
+            pickle.dump(credentials, f)
+        logger.info("已保存登录凭据")
+
+    def remove_credentials(self):
+        try:
+            with open("credentials", "w"):
+                pass
+        except Exception as e:
+            logger.error(f"未能删除登录凭据：{e}")
+
+    def load_credentials(self):
+        try:
+            with open("credentials", "rb") as f:
+                credentials = pickle.load(f)
+            self.lineEdit_username.setText(credentials[0])
+            self.lineEdit_password.setText(credentials[1])
+            self.remember_password.setChecked(True)
+            logger.info("已加载登录凭据")
+        except Exception as e:
+            if isinstance(e, FileNotFoundError) or isinstance(e, EOFError):
+                pass
+            else:
+                logger.error(f"未能加载登录凭据：{e}")
 
 
 class CourseWorker(QThread):
@@ -197,7 +236,7 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         self.resize(600, 400)
-        self.setWindowTitle("chaoxing-GUI")
+        self.setWindowTitle("chaoxing-GUI by jack_gdn")
         self.setFixedSize(600, 400)
 
         self.outputArea = QTextEdit(self)  # 输出区
