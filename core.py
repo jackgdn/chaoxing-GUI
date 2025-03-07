@@ -37,6 +37,10 @@ def init_session(isVideo: bool = False, isAudio: bool = False):
     return _session
 
 
+def get_timestamp():
+    return str(int(time.time() * 1000))
+
+
 class RollBackManager:
     def __init__(self) -> None:
         self.rollback_times = 0

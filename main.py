@@ -301,7 +301,7 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    logger.add("chaoxing.log", rotation="10 KB", encoding="utf-8")
+    logger.add("chaoxing.log", rotation="1024 KB", encoding="utf-8")
     app = QApplication()
     font = app.font()
     font.setPointSize(13)
