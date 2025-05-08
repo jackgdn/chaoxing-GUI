@@ -1,22 +1,26 @@
 # encoding: utf-8
 
+import pickle
+import sys
+from random import random
+from time import sleep
+
+from loguru import logger
+from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QApplication,
-    QMainWindow,
-    QPushButton,
-    QLineEdit,
     QCheckBox,
-    QMessageBox,
-    QTextEdit,
     QComboBox,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QMessageBox,
     QProgressBar,
-    QLabel
+    QPushButton,
+    QTextEdit,
 )
-from PySide6.QtCore import QThread, Signal
+
 from core import Account, Chaoxing, RollBackManager
-import sys
-from loguru import logger
-import pickle
 
 
 class LoginWindow(QMainWindow):
@@ -129,6 +133,9 @@ class CourseWorker(QThread):
         # 为了支持课程任务回滚，采用下标方式遍历任务点
         __point_index = 0
         while __point_index < len(point_list["points"]):
+
+            sleep(1 + random() * 2)
+
             point = point_list["points"][__point_index]
             self.signal_logger.emit(f'当前章节: {point["title"]}')
             logger.info(f'当前章节: {point["title"]}')

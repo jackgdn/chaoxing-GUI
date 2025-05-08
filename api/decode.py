@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-import re
 import json
+import re
+
 from bs4 import BeautifulSoup
 from loguru import logger
 
@@ -69,7 +70,7 @@ def decode_course_point(_text):
         _raw_points = _chapter_unit.find_all("li")
         for _point in _raw_points:
             _point = _point.div
-            if not "id" in _point.attrs:
+            if "id" not in _point.attrs:
                 continue
             _point_detail = {}
             _point_detail["id"] = re.findall(r"^cur(\d{1,20})$", _point.attrs["id"])[0]

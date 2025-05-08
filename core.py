@@ -1,23 +1,24 @@
 # encoding=utf-8
 
+import random
 import re
 import time
-import random
-import requests
 from hashlib import md5
+
+import requests
 from loguru import logger
+from PySide6.QtCore import QObject, Signal
 from requests.adapters import HTTPAdapter
-from PySide6.QtCore import QObject, Signal, QTimer
-from api.config import GlobalConst as gc
+
 from api.cipher import AESCipher
+from api.config import GlobalConst as gc
 from api.cookies import save_cookies, use_cookies
 from api.decode import (
-    decode_course_list,
-    decode_course_folder,
-    decode_course_point,
     decode_course_card,
+    decode_course_folder,
+    decode_course_list,
+    decode_course_point,
 )
-
 
 requests.packages.urllib3.disable_warnings()
 
@@ -240,7 +241,6 @@ class Chaoxing(QObject):
                 # 播放进度条
                 self.show_progress(_playingTime, _wait_time, _duration, _speed)
                 _playingTime += _wait_time
-            print("\r", end="", flush=True)
             self.signal_logger.emit(f"任务完成: {_job['name']}")
             logger.info(f"任务完成: {_job['name']}")
 
@@ -342,7 +342,9 @@ class Chaoxing(QObject):
             },
         )
         if _resp.status_code != 200:
-            self.signal_logger.emit(f"阅读任务学习失败 -> [{_resp.status_code}]{_resp.text}")
+            self.signal_logger.emit(
+                f"阅读任务学习失败 -> [{_resp.status_code}]{_resp.text}"
+            )
             logger.warning(f"阅读任务学习失败 -> [{_resp.status_code}]{_resp.text}")
         else:
             _resp_json = _resp.json()
