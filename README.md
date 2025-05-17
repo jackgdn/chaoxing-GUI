@@ -4,11 +4,17 @@
 
 ## 使用方法
 
+### 使用源代码
+
 * 下载项目到本地 `git clone https://github.com/jackgdn/chaoxing-GUI.git --depth=1`
 * 进入项目路径 `cd chaoxing-GUI`
 * *~~安装依赖 `python -m pip install -r requirements.txt`~~*
 * *~~运行程序 `python main.py`~~*
 * 运行 `chaoxing-GUI.bat` 或 `chaoxing-GUI.ps1`（Windows）；运行 `chaoxing-GUI.sh`（UNIX）。
+
+### 使用可执行文件（限 Windows x64）
+
+[下载](https://github.com/jackgdn/chaoxing-GUI/releases) `chaoxing-GUI.exe` 并运行。
 
 ## 计划更新路线
 
@@ -48,6 +54,10 @@
 ### 2025.5.8 - 6#
 
 - 解码课程时添加等待时间，避免被判定异常导致学习无效。
+
+### 2025.5.17 -7#
+
+- 适配超星更新。
 
 # 免责声明
 
